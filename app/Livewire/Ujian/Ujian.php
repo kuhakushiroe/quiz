@@ -13,7 +13,7 @@ class Ujian extends Component
     #[Title('Test')]
     public $form = false;
     public $search = '';
-    public $nama, $code, $startdate, $starttime, $enddate, $endtime;
+    public $nama, $code, $startdate, $enddate;
     public function openForm()
     {
         $this->form = true;
@@ -29,23 +29,19 @@ class Ujian extends Component
             'code' => 'required',
             'nama' => 'required',
             'startdate' => 'required',
-            'starttime' => 'required',
             'enddate' => 'required',
-            'endtime' => 'required',
         ], [
             'code.required' => 'Code Harus Diisi',
             'nama.required' => 'Nama Harus Diisi',
             'startdate.required' => 'Start Date Harus Diisi',
-            'starttime.required' => 'Start Time Harus Diisi',
             'enddate.required' => 'End Date Harus Diisi',
-            'endtime.required' => 'End Time Harus Diisi',
         ]);
         OpenClass::create([
             'id_dosen' => auth()->user()->id,
             'code' => $this->code,
             'name' => $this->nama,
-            'start' => $this->startdate . ' ' . $this->starttime,
-            'end' => $this->enddate . ' ' . $this->endtime,
+            'start' => $this->startdate,
+            'end' => $this->enddate,
         ]);
         $this->closeForm();
     }

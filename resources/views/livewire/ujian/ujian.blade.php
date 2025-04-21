@@ -32,15 +32,9 @@
                     <div class="form-group">
                         <label for="date">Start</label>
                         <div class="input-group mb-3">
-                            <input type="date" class="form-control @error('startdate') is-invalid @enderror"
+                            <input type="datetime-local" class="form-control @error('startdate') is-invalid @enderror"
                                 wire:model="startdate">
-                            <span class="input-group-text">:</span>
-                            <input type="time" class="form-control @error('starttime') is-invalid @enderror"
-                                wire:model="starttime">
                             @error('startdate')
-                                <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                            @enderror
-                            @error('starttime')
                                 <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                             @enderror
                         </div>
@@ -48,15 +42,9 @@
                     <div class="form-group">
                         <label for="date">End</label>
                         <div class="input-group mb-3">
-                            <input type="date" class="form-control @error('enddate') is-invalid @enderror "
+                            <input type="datetime-local" class="form-control @error('enddate') is-invalid @enderror "
                                 wire:model="enddate">
-                            <span class="input-group-text">:</span>
-                            <input type="time" class="form-control @error('endtime') is-invalid @enderror "
-                                wire:model="endtime">
                             @error('enddate')
-                                <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                            @enderror
-                            @error('endtime')
                                 <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                             @enderror
                         </div>
