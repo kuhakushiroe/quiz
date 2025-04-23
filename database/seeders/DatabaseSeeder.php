@@ -34,30 +34,38 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('426615790'),
         ]);
         $dosenIds = User::where('role', 'dosen')->pluck('id')->toArray();
-        $idDosen = $faker->randomElement($dosenIds);
-        foreach (range(1, 100) as $index) {
-            $name = $faker->name;
-            $number = $faker->unique()->numerify('###########');
-            Mahasiswa::create([
-                'nama' => $name,
-                'nim' => $number,
+        // $idDosen = $faker->randomElement($dosenIds);
+        $mahasiswaList = [
+            ['nim' => '220108002', 'nama' => 'MUHAMMAD FAHRUL KHOLIDY'],
+            ['nim' => '220108004', 'nama' => 'NADIA FEBRIANA'],
+            ['nim' => '220108005', 'nama' => 'RIADATUN HASANAH'],
+            ['nim' => '220108006', 'nama' => 'MUSNAINI'],
+            ['nim' => '220108007', 'nama' => 'DELA YUNITA RIZKI'],
+            ['nim' => '220108009', 'nama' => 'LAELATIN NINGSIH'],
+            ['nim' => '220108012', 'nama' => 'LIA ISMI MAWANTI'],
+            ['nim' => '220108014', 'nama' => 'M. ANNIEL SEPTIAN PRATAMA PUTRA N.'],
+            ['nim' => '220108015', 'nama' => 'M. HANIF AL AFANI'],
+            ['nim' => '220108018', 'nama' => 'SILVA DIADARA'],
+            ['nim' => '220108019', 'nama' => 'NURUL TITIAN LESTARI'],
+            ['nim' => '220108020', 'nama' => "MUHAMMAD KHAIRUL YUSNI SYA'BANI"],
+            ['nim' => '220108021', 'nama' => 'SINDI YASARI'],
+            ['nim' => '220108022', 'nama' => 'AULIA RAMDANI BAFADAL'],
+            ['nim' => '220108023', 'nama' => 'FAIZIN'],
+        ];
+
+        foreach ($mahasiswaList as $data) {
+            $mahasiswa = Mahasiswa::create([
+                'nim' => $data['nim'],
+                'nama' => $data['nama'],
             ]);
+
             User::create([
-                'name' => $name,
-                'username' => $number,
-                'email' => $number . '@example.com',
-                'role' => 'mahasiswa', // Assign subrole acak
-                'password' => Hash::make('password'),
+                'name' => $data['nama'],
+                'username' => $data['nim'],
+                'email' => $data['nim'] . '@example.com',
+                'role' => 'mahasiswa',
+                'password' => Hash::make($data['nim']), // Password disamakan dengan NIM
             ]);
-            // Banksoal::create([
-            //     'id_users' => $idDosen,
-            //     'soal' => $faker->sentence,
-            //     'jawabanA' => $faker->sentence,
-            //     'jawabanB' => $faker->sentence,
-            //     'jawabanC' => $faker->sentence,
-            //     'jawabanD' => $faker->sentence,
-            //     'jawabanBenar' => $faker->randomElement(['A', 'B', 'C', 'D']),
-            // ]);
         }
     }
 }

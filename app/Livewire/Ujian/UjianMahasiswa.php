@@ -3,8 +3,10 @@
 namespace App\Livewire\Ujian;
 
 use App\Models\Banksoal;
+use App\Models\Mahasiswa;
 use App\Models\OpenClass;
 use App\Models\Ujian;
+use App\Models\User;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
@@ -51,37 +53,37 @@ class UjianMahasiswa extends Component
             ->inRandomOrder()
             ->take($this->jumlah_soal)
             ->get();
+        $ujianData = [];
         foreach ($soal as $s) {
-            Ujian::create([
-                'id_mahasiswa' => auth()->user()->id,
+            $cariidmahasiswa = Mahasiswa::where('nim', auth()->user()->username)->first();
+            $ujianData[] = [
+                'id_mahasiswa' =>  $cariidmahasiswa->id,
                 'id_openclass' => $this->id_openclass,
                 'id_banksoal' => $s->id,
-                'jawaban' => "E",
-            ]);
+                'jawaban' => 'E',
+                'created_at' => now(),
+                'updated_at' => now()
+            ];
         }
+
+        Ujian::insert($ujianData);
         $this->form = false;
     }
     public function simpanJawaban($id)
     {
-        $pilihan = $this->jawaban[$id] ?? null;
-
-        if ($pilihan) {
-            Ujian::updateOrCreate(
-                [
-                    'id' => $id,
-                ],
-                [
-                    'jawaban' => $pilihan,
-                ]
-            );
+        if (isset($this->jawaban[$id])) {
+            Ujian::where('id', $id)->update([
+                'jawaban' => $this->jawaban[$id],
+            ]);
         }
     }
     public function mount()
     {
+        $cariidmahasiswa = Mahasiswa::where('nim', auth()->user()->username)->first();
         $jawabanTersimpan = Ujian::join('openclass', 'ujian.id_openclass', '=', 'openclass.id')
             ->join('banksoal', 'ujian.id_banksoal', '=', 'banksoal.id')
             ->select('openclass.*', 'banksoal.*', 'ujian.*', 'ujian.id as id_ujian')
-            ->where('id_mahasiswa', auth()->user()->id)
+            ->where('id_mahasiswa', $cariidmahasiswa->id)
             ->where('openclass.end', '>', now())
             ->get();
 
@@ -94,10 +96,11 @@ class UjianMahasiswa extends Component
         $kelas = OpenClass::where('start', '<=', now())
             ->where('end', '>=', now())
             ->get();
+        $cariidmahasiswa = Mahasiswa::where('nim', auth()->user()->username)->first();
         $soal = Ujian::join('openclass', 'ujian.id_openclass', '=', 'openclass.id')
             ->join('banksoal', 'ujian.id_banksoal', '=', 'banksoal.id')
             ->select('openclass.*', 'banksoal.*', 'ujian.*', 'ujian.id as id_ujian')
-            ->where('id_mahasiswa', auth()->user()->id)
+            ->where('id_mahasiswa', $cariidmahasiswa->id)
             ->where('openclass.end', '>', now())
             ->get();
         return view('livewire.ujian.ujian-mahasiswa', [

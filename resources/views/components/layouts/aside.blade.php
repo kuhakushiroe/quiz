@@ -57,6 +57,12 @@
                                 <p>Open Class</p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="hasil-ujian" class="nav-link @if ($routeName == 'hasil-ujian') active @endif">
+                                <i class="nav-icon bi bi-flag"></i>
+                                <p>Hasil Ujian</p>
+                            </a>
+                        </li>
                     @endhasAnyRole
                 @endhasAnyRole
                 @hasAnyRole(['mahasiswa'])

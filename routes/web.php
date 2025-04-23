@@ -29,7 +29,9 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('ujian-dosen', Ujian::class)->name('ujian-dosen');
     });
     Route::get('ujian-mahasiswa', UjianMahasiswa::class)->name('ujian-mahasiswa');
-    Route::get('hasil-ujian', HistoriUjian::class)->name('hasil-ujian');
+    Route::group(['middleware' => ['role:dosen,mahasiswa']], function () {
+        Route::get('hasil-ujian', HistoriUjian::class)->name('hasil-ujian');
+    });
 
     Route::get('logout', LoginController::class . '@logout')->name('logout');
 });
