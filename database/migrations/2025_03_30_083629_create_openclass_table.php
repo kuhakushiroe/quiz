@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('id_dosen');
             $table->string('name');
             $table->string('code');
+            $table->string('jumlah_soal');
             $table->datetime('start');
             $table->datetime('end');
             $table->softDeletes();

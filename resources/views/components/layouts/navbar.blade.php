@@ -77,8 +77,8 @@
                 <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
                     <!--begin::User Image-->
                     <li class="user-header text-bg-primary">
-                        <img src="{{ asset('dist/assets/img/user2-160x160.jpg') }}"
-                            class="rounded-circle shadow text-center" alt="User Image" />
+                        {{-- <img src="{{ asset('dist/assets/img/user2-160x160.jpg') }}"
+                            class="rounded-circle shadow text-center" alt="User Image" /> --}}
                         <p class="text-center">
                             {{ auth()->user()->name }}
                         </p>

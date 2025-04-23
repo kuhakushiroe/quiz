@@ -21,6 +21,29 @@
                             <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                         @enderror
                     </div>
+                    @if (in_array(auth()->user()->role, ['admin', 'superadmin']))
+                        <div class="form-group">
+                            <label for="id_dosen">Dosen</label>
+                            <select name="id_dosen" wire:model="id_dosen"
+                                class="form-control @error('id_dosen') is-invalid @enderror">
+                                <option value="">Pilih Dosen</option>
+                                @foreach ($caridosen as $item)
+                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                @endforeach
+                            </select>
+                            @error('id_dosen')
+                                <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                            @enderror
+                        </div>
+                    @endif
+                    <div class="form-group">
+                        <label for="jumlah_soal">Jumlah Soal</label>
+                        <input type="text" class="form-control @error('jumlah_soal') is-invalid @enderror"
+                            wire:model="jumlah_soal" placeholder="Jumlah Soal">
+                        @error('jumlah_soal')
+                            <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                        @enderror
+                    </div>
                     <div class="form-group">
                         <label for="code">Code</label>
                         <input type="text" class="form-control @error('code') is-invalid @enderror" wire:model="code"

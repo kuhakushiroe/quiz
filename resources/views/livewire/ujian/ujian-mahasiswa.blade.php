@@ -1,20 +1,27 @@
 <div>
     @if ($form)
-        <form action="">
-            <div class="form-group">
-                <label for="codecek">Code {{ $name }}</label>
-                <input type="text" class="form-control @error('codecek') is-invalid @enderror" wire:model="codecek"
-                    placeholder="Code Untuk Mulai Ujian / Password">
-                @error('codecek')
-                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                @enderror
+        <div class="card text-start">
+            <div class="card-header">
+                <h3 class="card-title">Mulai Ujian</h3>
             </div>
-            <div class="form-group">
-                <button class="btn btn-outline-secondary btn-sm"
-                    wire:click.prevent="start('{{ $id_openclass }}')">Join</button>
-                <button class="btn btn-outline-danger btn-sm" wire:click="closeForm">Close</button>
+            <div class="card-body">
+                <form action="">
+                    <div class="form-group mb-2">
+                        <label for="codecek">Code {{ $name }}</label>
+                        <input type="text" class="form-control @error('codecek') is-invalid @enderror"
+                            wire:model="codecek" placeholder="Code Untuk Mulai Ujian / Password">
+                        @error('codecek')
+                            <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-outline-secondary btn-sm"
+                            wire:click.prevent="start('{{ $id_openclass }}')">Join</button>
+                        <button class="btn btn-outline-danger btn-sm" wire:click="closeForm">Close</button>
+                    </div>
+                </form>
             </div>
-        </form>
+        </div>
     @else
         {{-- Jika Memiliki Soal --}}
         @forelse ($soal as $index => $datasoal)
@@ -64,13 +71,19 @@
             </div>
         @empty
             {{-- jika tidak ada soal --}}
-            @forelse ($kelas as $data)
-                <button class="btn btn-outline-primary btn-lg" wire:click="open({{ $data->id }})">
-                    {{ $data->name }}
-                </button>
-            @empty
-            @endforelse
+            <div class="card text-start">
+                <div class="card-header">
+                    <h3 class="card-title">Menu Soal</h3>
+                </div>
+                <div class="card-body">
+                    @forelse ($kelas as $data)
+                        <button class="btn btn-outline-primary btn-lg" wire:click="open({{ $data->id }})">
+                            {{ $data->name }}
+                        </button>
+                    @empty
+                    @endforelse
+                </div>
+            </div>
         @endforelse
-
     @endif
 </div>

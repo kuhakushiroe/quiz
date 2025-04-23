@@ -12,7 +12,7 @@ class UjianMahasiswa extends Component
 {
     #[Title('Ujian Mahasiswa')]
     public $form = false;
-    public $id_openclass, $name, $id_dosen, $code, $codecek;
+    public $id_openclass, $jumlah_soal, $name, $id_dosen, $code, $codecek;
     public $jawaban = [];
     public function open($id)
     {
@@ -21,6 +21,7 @@ class UjianMahasiswa extends Component
         $this->id_dosen = $data->id_dosen;
         $this->name = $data->name;
         $this->code = $data->code;
+        $this->jumlah_soal = $data->jumlah_soal;
         $this->form = true;
     }
     public function close()
@@ -30,6 +31,7 @@ class UjianMahasiswa extends Component
         $this->code = null;
         $this->name = null;
         $this->id_dosen = null;
+        $this->jumlah_soal = null;
         $this->form = false;
     }
     public function start($id)
@@ -47,7 +49,7 @@ class UjianMahasiswa extends Component
         ]);
         $soal = Banksoal::where('id_users', $this->id_dosen)
             ->inRandomOrder()
-            ->take(25)
+            ->take($this->jumlah_soal)
             ->get();
         foreach ($soal as $s) {
             Ujian::create([
